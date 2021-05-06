@@ -1,0 +1,21 @@
+{
+  "name": "dbcaglobal.com",
+  "version": "1.0.0",
+  "description": "A website",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "",
+    "start": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bozzltron/dbcaglobal.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bozzltron/dbcaglobal.com/issues"
+  },
+  "homepage": "https://github.com/bozzltron/dbcaglobal.com#readme"
+}
