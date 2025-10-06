@@ -1,19 +1,13 @@
-# Serve index.html for clean URLs
-/about            /about/index.html        200
-/services         /services/index.html     200
-/why-dbca         /why-dbca/index.html     200
-/contact          /contact/index.html      200
+# Rewrite clean URLs to serve from subdirectories (200 = rewrite, not redirect)
+/about            /about/           200
+/services         /services/        200
+/why-dbca         /why-dbca/        200
+/contact          /contact/         200
 
-# Redirect old .html URLs to clean URLs (in case they were bookmarked or linked)
-/about.html       /about                   301
-/services.html    /services                301
-/why-dbca.html    /why-dbca                301
-/contact.html     /contact                 301
-/index.html       /                        301
-
-# Ensure trailing slashes redirect to non-trailing slash
-/about/           /about                   301
-/services/        /services                301
-/why-dbca/        /why-dbca                301
-/contact/         /contact                 301
+# Redirect .html URLs to clean URLs
+/about.html       /about            301
+/services.html    /services         301
+/why-dbca.html    /why-dbca         301
+/contact.html     /contact          301
+/index.html       /                 301
 
