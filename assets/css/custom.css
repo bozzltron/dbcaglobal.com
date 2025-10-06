@@ -90,46 +90,41 @@ body.content-page #footer {
 }
 .content h2 {
 	margin-top: 0;
+	margin-bottom: 1rem;
 	color: #348cb2;
 	font-size: 2rem;
 	font-weight: 700;
 	letter-spacing: -0.025em;
 	text-transform: uppercase;
 	line-height: 1.2;
-	margin-bottom: 1rem;
-	text-align: left;
 }
 .content h3 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
 	color: #348cb2;
 	font-size: 1.5rem;
 	font-weight: 600;
-	margin-top: 0;
-	margin-bottom: 0.75rem;
 	letter-spacing: -0.025em;
-	text-align: left;
 }
 .content p {
+	margin-bottom: 1.25rem;
 	color: #333;
 	line-height: 1.8;
-	text-align: left;
-	margin-bottom: 1.25rem;
 }
 .content strong {
 	color: #555555;
 }
 .content ul,
 .content ol {
+	margin-left: 1.5rem;
 	color: #333;
 	line-height: 1.8;
-	text-align: left;
-	margin-left: 1.5rem;
 }
 .content ul {
 	list-style-type: disc;
 }
 .content li {
 	margin: 0.5rem 0;
-	text-align: left;
 	color: #333;
 }
 .content li::marker {
@@ -144,12 +139,11 @@ body.content-page #footer {
 	text-decoration: underline;
 }
 .content blockquote {
-	border-left: 4px solid #348cb2;
-	padding-left: 1.5rem;
 	margin: 1.5rem 0;
-	font-style: italic;
+	padding-left: 1.5rem;
+	border-left: 4px solid #348cb2;
 	color: #555;
-	text-align: left;
+	font-style: italic;
 }
 
 /* Contact page specific */
@@ -307,7 +301,7 @@ body.homepage #header p a:hover {
 	}
 	body.content-page #header .nav-links a {
 		margin: 0 !important;
-		font-size: 1.1rem !important;
+		font-size: 1.3rem !important;
 		padding: 0.75rem 1rem !important;
 		min-height: 44px;
 		display: inline-flex;
@@ -315,25 +309,40 @@ body.homepage #header p a:hover {
 	}
 	.content {
 		padding: 1rem !important;
+		font-size: 1.15rem !important;
 	}
 	.content h2 {
-		font-size: 1.25rem !important;
+		font-size: 1.65rem !important;
 	}
 	.content h3 {
-		font-size: 1.1rem !important;
+		font-size: 1.4rem !important;
+	}
+	.content p {
+		font-size: 1.15rem !important;
+		line-height: 1.7 !important;
 	}
 	.content a {
-		font-size: 1.15rem !important;
+		font-size: 1.25rem !important;
 		padding: 0.25rem 0 !important;
 	}
+	.content ul,
+	.content ol {
+		font-size: 1.15rem !important;
+	}
+	.content li {
+		font-size: 1.15rem !important;
+	}
+	.content strong {
+		font-size: 1.15rem !important;
+	}
 	.contact-info {
-		font-size: 1rem !important;
+		font-size: 1.2rem !important;
 	}
 	.contact-info .content a {
 		padding: 0.5rem 0 !important;
 	}
 	.tagline {
-		font-size: 1.1rem !important;
+		font-size: 1.35rem !important;
 	}
 	/* Homepage mobile */
 	body.homepage #header {
@@ -343,8 +352,9 @@ body.homepage #header p a:hover {
 		height: 120px !important;
 	}
 	body.homepage #header p {
-		font-size: 0.95rem;
+		font-size: 1.25rem;
 		padding: 0 1rem;
+		line-height: 1.6;
 	}
 	body.homepage #header .nav-links {
 		display: flex;
@@ -354,7 +364,7 @@ body.homepage #header p a:hover {
 	}
 	body.homepage #header .nav-links a {
 		margin: 0 !important;
-		font-size: 1.1rem !important;
+		font-size: 1.3rem !important;
 		padding: 0.75rem 1rem !important;
 		min-height: 44px;
 		display: inline-flex;
