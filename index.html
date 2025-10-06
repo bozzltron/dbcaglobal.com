@@ -4,12 +4,14 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>DBCA Global</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="canonical" href="https://www.dbcaglobal.com/" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/custom.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<meta name="title" content="DBCA Global – Smaller world, bigger business, one contact." />
 		<meta name="description" content="DBCA Global connects you to a world of business opportunities with a single contact. Smaller world, bigger business." />
@@ -19,6 +21,8 @@
 		<meta property="og:url" content="https://www.dbcaglobal.com/" />
 		<meta property="og:title" content="DBCA Global – Smaller world, bigger business, one contact." />
 		<meta property="og:description" content="DBCA Global connects you to a world of business opportunities with a single contact. Smaller world, bigger business." />
+		<meta property="og:image" content="https://www.dbcaglobal.com/assets/logo.png" />
+		<meta property="og:image:alt" content="DBCA Global Logo" />
 		<meta property="og:site_name" content="DBCA Global" />
 		<meta property="og:locale" content="en_US" />
 
@@ -27,6 +31,8 @@
 		<meta name="twitter:url" content="https://www.dbcaglobal.com/" />
 		<meta name="twitter:title" content="DBCA Global – Smaller world, bigger business, one contact." />
 		<meta name="twitter:description" content="DBCA Global connects you to a world of business opportunities with a single contact. Smaller world, bigger business." />
+		<meta name="twitter:image" content="https://www.dbcaglobal.com/assets/logo.png" />
+		<meta name="twitter:image:alt" content="DBCA Global Logo" />
 		<!-- Google tag (gtag.js) -->
 		<script>
 		  if (location.hostname === "www.dbcaglobal.com") {
@@ -42,25 +48,56 @@
 			gtag('config', 'G-KCMM25H07C');
 		  }
 		</script>
+		<!-- Structured Data -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "DBCA Global",
+			"legalName": "DBCA Global, LLC",
+			"url": "https://www.dbcaglobal.com",
+			"logo": "https://www.dbcaglobal.com/assets/logo.png",
+			"description": "U.S.-based procurement and logistics consultancy connecting international suppliers with American manufacturers",
+			"address": {
+				"@type": "PostalAddress",
+				"addressLocality": "Austin",
+				"addressRegion": "TX",
+				"addressCountry": "US"
+			},
+			"contactPoint": {
+				"@type": "ContactPoint",
+				"telephone": "+1-515-306-6005",
+				"email": "donis@dbcaglobal.com",
+				"contactType": "Customer Service",
+				"availableLanguage": ["en"]
+			},
+			"founder": {
+				"@type": "Person",
+				"name": "Donis Bosworth",
+				"jobTitle": "Founder & Managing Director"
+			},
+			"slogan": "Smaller world, bigger business, one contact."
+		}
+		</script>
 	</head>
-	<body class="is-preload">
+	<body class="is-preload homepage">
+		<a href="#main" class="skip-to-content">Skip to main content</a>
 		<div id="wrapper">
 			<div id="bg"></div>
 			<div id="overlay"></div>
-			<div id="main">
+			<div id="main" role="main">
 
 				<!-- Header -->
 					<header id="header">
-						<h1>DBCA Global</h1>
+						<h1><img src="/assets/logo.svg" alt="DBCA Global - Smaller world, bigger business, one contact" style="height: 250px;" /></h1>
 						<p>Smaller world, bigger business, one contact.</p>
-						<nav>
-							<ul>
-								<!-- <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-								<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li> -->
-								<li><a href="mailto:donis@dbcaglobal.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-							</ul>
+						<nav aria-label="Main navigation">
+							<p class="nav-links" style="margin-top: 2rem;">
+								<a href="/about" style="text-decoration: none; margin: 0 1rem;">About</a>
+								<a href="/services" style="text-decoration: none; margin: 0 1rem;">Services</a>
+								<a href="/why-dbca" style="text-decoration: none; margin: 0 1rem;">Why DBCA</a>
+								<a href="/contact" style="text-decoration: none; margin: 0 1rem;">Contact</a>
+							</p>
 						</nav>
 					</header>
 

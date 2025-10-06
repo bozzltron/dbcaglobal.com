@@ -1,0 +1,13 @@
+# Redirect old .html URLs to clean URLs (in case they were bookmarked or linked)
+/about.html       /about       301
+/services.html    /services    301
+/why-dbca.html    /why-dbca    301
+/contact.html     /contact     301
+/index.html       /            301
+
+# Ensure trailing slashes redirect to non-trailing slash
+/about/           /about       301
+/services/        /services    301
+/why-dbca/        /why-dbca    301
+/contact/         /contact     301
+

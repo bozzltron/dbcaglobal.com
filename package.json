@@ -1,21 +1,23 @@
 {
   "name": "dbcaglobal.com",
   "version": "1.0.0",
-  "description": "A website",
+  "description": "DBCA Global - Procurement and Logistics Consultancy",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "",
-    "start": ""
+    "dev": "serve . -p 3010",
+    "start": "serve . -p 3010"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bozzltron/dbcaglobal.com.git"
   },
-  "author": "",
+  "author": "Donis Bosworth",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bozzltron/dbcaglobal.com/issues"
   },
-  "homepage": "https://github.com/bozzltron/dbcaglobal.com#readme"
+  "homepage": "https://github.com/bozzltron/dbcaglobal.com#readme",
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
 }
