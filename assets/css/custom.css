@@ -11,7 +11,7 @@ body, input, select, textarea {
 /* Skip to content link for accessibility */
 .skip-to-content {
 	position: absolute;
-	top: -40px;
+	top: -100px;
 	left: 0;
 	background: #348cb2;
 	color: white;
@@ -19,9 +19,12 @@ body, input, select, textarea {
 	text-decoration: none;
 	z-index: 100;
 	font-weight: bold;
+	clip: rect(0, 0, 0, 0);
 }
 .skip-to-content:focus {
-	top: 0;
+	top: 10px;
+	left: 10px;
+	clip: auto;
 }
 
 /* Content page overrides */
