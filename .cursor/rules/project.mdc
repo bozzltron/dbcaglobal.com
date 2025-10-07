@@ -2,115 +2,95 @@
 
 ## Project Overview
 
-DBCA Global (dbcaglobal.com) is a professional business website for a U.S.-based procurement and logistics consultancy. The site is designed to be maintained by AI coding assistants and follows static HTML best practices.
+DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultancy website. Static HTML site optimized for AI-assisted maintenance.
 
 **Company:** DBCA Global, LLC  
-**Industry:** Procurement & Logistics  
-**Target Audience:** International vendors, U.S. manufacturers, logistics partners  
-**Location:** Austin, TX
+**Location:** Austin, TX  
+**Target Audience:** International vendors, U.S. manufacturers, logistics partners
 
 ## Architecture
 
 ### Technology Stack
-- **Static HTML** - No framework, vanilla HTML5
-- **CSS** - Custom CSS file + theme CSS (HTML5 UP Aerial theme modified)
-- **Font:** Open Sans (Google Fonts)
+- **Static HTML5** - No framework
+- **CSS** - custom.css (overrides) + main.css (theme base)
+- **Font:** Open Sans (Google Fonts, weights: 300, 400, 600, 700)
 - **Dev Server:** `serve` package (port 3010)
-- **Deployment:** Cloudflare Pages (via Git)
+- **Deployment:** Cloudflare Pages
 
 ### File Structure
 ```
 /
-├── index.html              # Homepage - landing page
-├── about/index.html        # Company background & founder
+├── index.html              # Homepage
+├── about/index.html        # Company & founder
 ├── services/index.html     # Service offerings
 ├── why-dbca/index.html     # Value proposition
-├── contact/index.html      # Contact information
+├── contact/index.html      # Contact info
 ├── assets/
 │   ├── css/
-│   │   ├── custom.css     # Custom styles and overrides
-│   │   ├── main.css       # Theme base styles
+│   │   ├── custom.css     # All custom styles
+│   │   ├── main.css       # Theme base (HTML5 UP Aerial)
 │   │   └── noscript.css   # Non-JS fallback
 │   ├── logo.svg
 │   └── logo.png
-├── docs/                   # Private business documents (not in git)
-├── _redirects             # Cloudflare redirects for clean URLs
-└── _headers               # Security & caching headers
+├── docs/                   # Private (gitignored)
+├── _redirects             # Cloudflare URL routing
+└── _headers               # Security headers
 ```
 
 ### Clean URLs
-- Directory structure enables clean URLs (e.g., `/about` instead of `/about.html`)
-- Works on Cloudflare Pages without additional configuration
-- Each page is at `{directory}/index.html`
+- Directory-based: `/about` → `/about/index.html`
+- Configured via `_redirects` with 200 rewrites
 
 ## Design System
 
-### Color Palette
-- **Primary Blue:** `#348cb2` (brand color, used for headers, links, accents)
+### Colors
+- **Primary Blue:** `#348cb2` (headers, links, accents)
 - **Dark Gray:** `#444444` (taglines)
 - **Medium Gray:** `#555555` (strong text)
 - **Body Text:** `#333` (paragraphs, lists)
-- **White Backgrounds:** `rgba(255,255,255,0.85)` for content panes (85% opacity for background visibility)
-- **Blue Boxes:** `rgba(52, 140, 178, 0.55)` (contact method boxes)
+- **Content Panes:** `rgba(255,255,255,0.85)` (85% opacity)
+- **Contact Boxes:** `rgba(52,140,178,0.55)`
 
 ### Typography
-- **Font Family:** 'Open Sans', sans-serif (weights: 300, 400, 600, 700)
-- **Main Headers (h1):** Logo image (120px height desktop, 80px tablet, 60px mobile)
-- **Content Headers (h2):** 2rem, `#348cb2` (brand blue), bold (700), uppercase, left-aligned, no top margin
-- **Subheadings (h3):** 1.5rem, `#348cb2` (brand blue), semi-bold (600), left-aligned, no top margin
-- **Body Text:** `#333`, 1.8 line-height, 1.25rem bottom margin for spacing, left-aligned
-- **Links:** `#348cb2` with hover effects (scale 1.05, underline)
+- **Font:** 'Open Sans', sans-serif
+- **H1:** Logo image (250px homepage, 120px desktop pages, 80px tablet, 60px mobile)
+- **H2:** 2rem, `#348cb2`, bold 700, uppercase, no top margin
+- **H3:** 1.5rem, `#348cb2`, semi-bold 600, no top margin
+- **Body:** `#333`, 1.8 line-height, 1.25rem bottom margin
+- **Links:** `#348cb2`, hover: scale 1.05 + underline (0.3s ease transition)
 
-### Layout Principles
-1. **Consistent header across all pages** - DBCA Global logo + navigation
-2. **Increased top padding** - 6rem on desktop, 4rem tablet, 3rem mobile (above logo)
-3. **Centered page header, left-aligned content** - for readability
-4. **White content boxes** with rounded corners (8px) and 85% opacity
-5. **Animated background** - scrolling blue background on all pages
-6. **Smooth transitions** - 0.3s ease on navigation links with scale effect
-7. **No content animations** - instant load (except homepage has fast fade-in)
-8. **Enhanced spacing** - 1.25rem bottom margin on paragraphs
-9. **Mobile responsive** - Breakpoints at 768px (tablet) and 480px (mobile)
+### Layout
+- **Top Padding:** 6rem desktop, 4rem tablet, 3rem mobile
+- **Side Padding:** 2rem desktop, 1rem tablet, 0.75rem mobile
+- **Content Boxes:** White, 8px border-radius, 2rem padding, 2rem bottom margin
+- **Max Width:** 900px (content pages)
+- **List Bullets:** Disc style (filled circles)
+- **Emoji Spacing:** 0.5rem right padding
 
-### UI Elements
-- **List bullets:** Disc style (filled circles)
-- **Contact method boxes:** Blue semi-transparent background with rounded corners
-- **Emoji spacing:** 0.5rem right padding on emoji icons
-- **Navigation:** Smooth hover animations with 5% scale increase
-
-## HTML Best Practices
-
-### Performance
-1. **Minimize HTTP requests** - single custom CSS file
-2. **Use semantic HTML5** - `<header>`, `<footer>`, `<nav>`, proper headings
-3. **Optimize images** - use SVG for logo, optimized PNG for social sharing
-4. **Google Fonts** - preconnect and display=swap for performance
-
-### SEO
-1. **Unique titles per page** - format: "Page Name - DBCA Global"
-2. **Meta descriptions** - 150-160 characters, compelling, keyword-rich
-3. **Open Graph tags** - for social media sharing
-4. **Semantic HTML** - proper heading hierarchy (h1 → h2 → h3)
-5. **Internal linking** - consistent navigation across all pages
-6. **Clean URLs** - no `.html` extensions
-7. **Canonical URLs** - prevent duplicate content issues
-
-### Accessibility
-1. **Skip to content link** - keyboard navigation support (clip technique)
-2. **Proper heading hierarchy** - don't skip levels
-3. **Alt text for images** - descriptive, not decorative
-4. **Color contrast** - WCAG AA compliant
-5. **Link text** - descriptive, not "click here"
-6. **Keyboard navigation** - all interactive elements accessible
-7. **ARIA labels** - navigation landmarks, current page indicators
-8. **Motion preferences** - respect prefers-reduced-motion
+### Responsive Breakpoints
+- **Tablet:** 768px and below
+- **Mobile:** 480px and below (increased font sizes for readability)
+  - Base: 1.15rem, H2: 1.65rem, H3: 1.4rem, Nav: 1.3rem
+  - Line height: 1.7 for paragraphs
 
 ## Content Structure
 
-### Data Schema (Implicit)
-Each page follows a consistent semantic structure:
-
+### Page Template
 ```html
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>[Page Name] - DBCA Global</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <link rel="canonical" href="https://www.dbcaglobal.com/[path]" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/custom.css" />
+  <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+  <meta name="title" content="[SEO Title]" />
+  <meta name="description" content="[150-160 chars]" />
+  <!-- Open Graph + Twitter cards -->
+</head>
 <body class="is-preload content-page">
   <a href="#main" class="skip-to-content">Skip to main content</a>
   <div id="wrapper">
@@ -128,75 +108,50 @@ Each page follows a consistent semantic structure:
           </p>
         </nav>
       </header>
-
+      
       <div class="content">
-        <h2>SECTION TITLE</h2>
+        <h2>Section Title</h2>
         <h3>Subsection</h3>
-        <p>Body content...</p>
+        <p>Content...</p>
         <ul><li>List items...</li></ul>
       </div>
-
+      
       <footer id="footer">
         <span class="copyright">&copy; DBCA Global LLC.</span>
       </footer>
     </div>
   </div>
+  <script>
+    window.onload = function() { document.body.classList.remove('is-preload'); }
+    window.ontouchmove = function() { return false; }
+    window.onorientationchange = function() { document.body.scrollTop = 0; }
+  </script>
 </body>
+</html>
 ```
 
-### Content Patterns
+### Key Business Information
 
-**About Page:**
-- Company overview and founding story
-- What DBCA does (procurement, supply chain, consulting)
-- Services overview
-- Company partners and sectors
-- Core values: Integrity, Intention, Impact
-- Founder background
-
-**Services Page:**
-- Overview paragraph
-- Three main service categories (vendors, customers, logistics partners)
-- Industries served
-- Each service in its own `.content` block
-
-**Why DBCA Page:**
-- Tagline: "Built on Trust. Driven by Results."
-- Value proposition
-- Competitive advantages
-- Proof points
-- Core differentiators
-
-**Contact Page:**
-- Call-to-action intro
-- Contact details (structured)
-- Multiple contact methods (email, WhatsApp, WeChat)
-- Location information
-- Response time expectations
-
-### Key Business Data
-
-**Contact Information:**
-- Email: donis@dbcaglobal.com (primary contact method)
-- WhatsApp: Available for international messaging
-- WeChat: International messaging available
-- Location: Austin, Texas, United States
-- Response time: Within 24 hours on business days
+**Contact:**
+- Email: donis@dbcaglobal.com
+- WhatsApp & WeChat available
+- Location: Austin, Texas
+- Response time: Within 24 hours (business days)
 
 **Taglines:**
-- Primary: "Smaller world, bigger business, one contact."
-- About page: "Born from hustle. Built with heart."
+- Homepage: "Smaller world, bigger business, one contact."
+- About: "Born from hustle. Built with heart."
 - Why DBCA: "Built on Trust. Driven by Results."
 
-**Core Values:**
-- **Integrity** - Do the right thing even when no one's watching
-- **Intention** - Every action has purpose and direction
-- **Impact** - Everything we touch gets better
+**Core Values (Three Non-Negotiables):**
+- **Integrity:** Do what's right; responsible sourcing, data-backed promises
+- **Intention:** Purpose and precision; transparency in all operations
+- **Impact:** Leave everything stronger; science-driven, sustainability-focused
 
-**Key Services:**
-1. **For Vendors** - U.S. market entry, warehousing, compliance, freight coordination
-2. **For Customers** - Vetted suppliers, competitive pricing, transparency, U.S.-based fulfillment
-3. **For Logistics Partners** - Consistent volumes, clear terms, national connections
+**Services:**
+- **For Vendors:** U.S. market entry, warehousing, compliance, freight
+- **For Customers:** Vetted suppliers, competitive pricing, transparency
+- **For Logistics Partners:** Consistent volumes, clear terms, national network
 
 **Industries:**
 - Leather and Tanning
@@ -204,175 +159,140 @@ Each page follows a consistent semantic structure:
 - Animal Feed and Nutrition
 
 **Founder:**
-- Donis Bosworth
-- Founder & Managing Director
-- 20 years experience in global trade and procurement
-- Former Vice President, North American Minerals Corporation (NAMCO)
+- Donis Bosworth, Founder & Managing Director
+- 20 years global trade and procurement experience
 
-## Styling Guidelines
+### Page Content Summary
 
-All styles are in `/assets/css/custom.css` which overrides the theme CSS.
+**About Page:**
+- Company origin story
+- Four service areas: Procurement & Representation, Supply Chain Optimization, Strategic Consulting, Operational Support
+- Partners: global producers + U.S. manufacturers
+- Three Non-Negotiables (detailed with sustainability emphasis)
+- Founder bio
 
-### Key CSS Classes
+**Services Page:**
+- Three audience segments (vendors, customers, logistics partners)
+- Service details for each segment
+- Industries served
 
-```css
-/* Typography */
-body, input, select, textarea {
-  font-family: 'Open Sans', sans-serif !important;
-}
+**Why DBCA Page:**
+- Value proposition
+- Competitive advantages
+- Proof points
 
-/* Content panes */
-.content {
-  background: rgba(255, 255, 255, 0.85);
-  padding: 2rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
+**Contact Page:**
+- Contact information
+- Three communication methods (email, WhatsApp, WeChat)
+- Response expectations
 
-.content h2 {
-  color: #348cb2;
-  font-size: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-top: 0;
-}
+## Best Practices
 
-.content h3 {
-  color: #348cb2;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 0;
-}
+### Accessibility (WCAG AA)
+- Skip-to-content link (CSS clip technique)
+- Viewport: `user-scalable=yes, maximum-scale=5.0`
+- 44px min touch target (mobile)
+- ARIA labels on navigation
+- Motion preferences respected (`prefers-reduced-motion`)
+- Semantic HTML with proper heading hierarchy
 
-/* Navigation with animations */
-body.content-page #header .nav-links a {
-  transition: all 0.3s ease;
-}
+### SEO
+- Unique titles: "[Page Name] - DBCA Global"
+- Meta descriptions: 150-160 characters
+- Canonical URLs on all pages
+- Open Graph + Twitter card tags
+- Structured data (homepage)
 
-body.content-page #header .nav-links a:hover {
-  transform: scale(1.05);
-  text-decoration: underline;
-}
+### Performance
+- Single custom CSS file
+- Google Fonts with `display=swap`
+- No JavaScript frameworks
+- Conditional Google Analytics (production only)
 
-/* Contact method boxes */
-.contact-method {
-  background: rgba(52, 140, 178, 0.55);
-  padding: 1rem;
-  border-radius: 4px;
-}
+## Development
 
-/* Emoji spacing */
-.contact-method span[role="img"] {
-  padding-right: 0.5rem;
-}
-
-/* Tagline styling */
-.tagline {
-  font-size: 1.5rem;
-  color: #444444;
-  text-align: center;
-  margin: 2rem 0;
-  font-weight: bold;
-}
-```
-
-### Page-Specific Body Classes
-- `homepage` - Homepage with special animations
-- `content-page` - All other pages (about, services, why-dbca, contact)
-
-## Development Commands
-
+### Commands
 ```bash
 npm install          # Install dependencies
 npm run dev          # Start dev server (http://localhost:3010)
-npm start            # Same as dev
 ```
+
+### Local Testing
+- Test all pages at different breakpoints (desktop, tablet, mobile)
+- Verify navigation works across all pages
+- Check contrast on animated background
 
 ## Deployment
 
-1. **Git push to main branch**
-2. Cloudflare Pages auto-deploys
-3. Clean URLs work automatically via directory structure
-4. `_redirects` handles legacy .html URLs
-5. `_headers` applies security headers
+### Cloudflare Pages Setup
 
-**Important:** The `/docs` folder is in `.gitignore` and should never be committed (contains private business documents).
+**Build Settings:**
+- Framework preset: None (Static)
+- Build command: (empty)
+- Build output directory: `/` (root)
 
-## Content Updates
+**_redirects File:**
+```
+# Rewrite clean URLs (200 = serve content without redirect)
+/about            /about/           200
+/services         /services/        200
+/why-dbca         /why-dbca/        200
+/contact          /contact/         200
 
-When updating content:
+# Redirect legacy URLs
+/about.html       /about            301
+/services.html    /services         301
+/why-dbca.html    /why-dbca         301
+/contact.html     /contact          301
+/index.html       /                 301
+```
 
-1. **Maintain consistent structure** - use same HTML patterns
-2. **Keep headers hierarchical** - h1 → h2 → h3, no skipping
-3. **Use `.content` blocks** - for each major section
-4. **Update meta descriptions** - when page content changes significantly
-5. **Test on mobile** - responsive design is critical
-6. **Check contrast** - ensure readability on animated background
-7. **Validate HTML** - use semantic markup
-8. **Update both pages** - if content affects multiple pages
+**How it works:** Cloudflare Pages serves `index.html` from directories when accessed with trailing slash. 200 rewrites map clean URLs to directory paths internally.
 
-## AI Maintenance Guidelines
+### Deployment Process
+1. Push to main branch
+2. Cloudflare auto-deploys
+3. Clear Cloudflare cache if needed (Dashboard → Caching → Purge Everything)
 
-When working on this project:
+**Important:** `/docs` folder is gitignored (private business documents).
 
-1. **Never change main.css** - only edit custom.css for overrides
-2. **Keep the animated background** - it's a core design element
-3. **Maintain clean URLs** - directory/index.html structure
-4. **Preserve the navigation** - identical across all pages
-5. **Don't add JavaScript** - keep it static and fast (except preload script)
-6. **Follow the content patterns** - for consistency
-7. **Test locally** - use `npm run dev` before committing
-8. **Preserve SEO elements** - titles, descriptions, Open Graph tags
-9. **Maintain accessibility** - skip links, ARIA labels, motion preferences
-10. **Keep docs private** - never commit /docs folder
+## Maintenance Guidelines
 
-## Browser Support
+### DO:
+- Edit only `custom.css` for styling changes
+- Maintain consistent navigation across all pages
+- Use `.content` blocks for each section
+- Update meta descriptions when content changes significantly
+- Preserve semantic HTML structure
+- Keep all pages mobile-responsive
+- Test locally before committing
 
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile responsive design
-- No IE11 support needed
-- Progressive enhancement approach
+### DON'T:
+- Modify `main.css` (theme file)
+- Remove animated background
+- Change directory structure
+- Add JavaScript frameworks
+- Commit `/docs` folder
+- Skip accessibility features
 
-### Mobile Responsive Breakpoints
+### CSS Structure
+All custom styles in `/assets/css/custom.css`:
+- Global overrides at top (font, body classes)
+- Content page styles
+- Component styles (.content, .contact-method, .tagline)
+- Homepage overrides
+- Motion preferences
+- Media queries (tablet 768px, mobile 480px)
 
-**Desktop (default):**
-- Logo: 120px
-- Top padding: 6rem
-- Side padding: 2rem
-- Full navigation in single line
-
-**Tablet (768px and below):**
-- Logo: 80px (internal) / 180px (homepage)
-- Top padding: 4rem
-- Side padding: 1rem
-- Navigation: reduced spacing
-
-**Mobile (480px and below):**
-- Logo: 60px (internal) / 120px (homepage)
-- Top padding: 3rem
-- Side padding: 0.75rem
-- Navigation: wraps with flexbox
-- Contact cards: stack vertically
-
-## Design Philosophy
-
-**Why static HTML?**
-- Only 5 pages, minimal complexity
-- No need for frameworks or build tools
-- Fast, secure, easy to maintain
-- Perfect for AI-assisted updates
-- Works everywhere without JavaScript
-
-**Why not use CSS frameworks?**
-- Custom CSS is more maintainable for this scope
-- No build process needed
-- Smaller file sizes
-- Complete control over styling
-- Easy to understand and modify
+### When Updating Content:
+1. Maintain heading hierarchy (h1 → h2 → h3)
+2. Use consistent `.content` block structure
+3. Keep text left-aligned within content boxes
+4. Test mobile font sizes
+5. Update Open Graph descriptions if page changes
 
 ---
 
 **Last Updated:** October 2025  
 **Maintained By:** AI Coding Assistants  
-**Current Font:** Open Sans  
-**Current Theme:** Modified HTML5 UP Aerial
+**Status:** Production-ready, optimized, accessible
