@@ -74,40 +74,107 @@
 		});
 	}
 
-	// Mobile Parallax Effect (only on mobile, respects reduced motion)
+	// Modern Parallax Effect - Uses separate background layers with transform (best practice)
 	function initMobileParallax() {
 		// Check if user prefers reduced motion
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (prefersReducedMotion) return;
 
-		// Only run on mobile devices (where background-attachment: fixed doesn't work)
-		const isMobile = window.matchMedia('(max-width: 768px)').matches || 
-		                 window.matchMedia('(hover: none)').matches;
-		if (!isMobile) return;
-
 		const parallaxElements = document.querySelectorAll('.parallax-hero, .parallax-section');
 		if (parallaxElements.length === 0) return;
+
+		// Detect mobile devices
+		function isMobileDevice() {
+			const width = window.innerWidth;
+			const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+			const noHover = window.matchMedia('(hover: none)').matches;
+			
+			if (width <= 768) return true;
+			if (hasTouch && width <= 1024) return true;
+			if (noHover) return true;
+			return false;
+		}
+
+		// Only run on mobile devices (where background-attachment: fixed doesn't work)
+		if (!isMobileDevice()) return;
+
+		// Set up background layers for each parallax element
+		const parallaxData = [];
+		
+		// Map of element IDs to their background images (ALWAYS use this - most reliable)
+		const backgroundMap = {
+			'hero': 'url("https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1920&q=80")',
+			'containers': 'url("/assets/container.webp")',
+			'ocean': 'url("https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80")',
+			'ship': 'url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80")'
+		};
+		
+		parallaxElements.forEach((element) => {
+			const bgLayer = element.querySelector('.parallax-bg');
+			if (!bgLayer) return;
+
+			const elementId = element.id;
+			
+			// ALWAYS use background map - don't rely on computed styles
+			let bgImage = null;
+			
+			if (elementId && backgroundMap[elementId]) {
+				bgImage = backgroundMap[elementId];
+			} else {
+				return; // Skip if no background found
+			}
+			
+			// Set the background
+			bgLayer.style.backgroundImage = bgImage;
+			bgLayer.style.backgroundSize = 'cover';
+			bgLayer.style.backgroundPosition = 'center';
+			bgLayer.style.backgroundRepeat = 'no-repeat';
+			
+			// Make sure bg layer is visible
+			bgLayer.style.display = 'block';
+			bgLayer.style.opacity = '1';
+			
+			// Remove background from parent element (bg layer handles it now)
+			element.style.backgroundImage = 'none';
+			
+			// Store element and bg layer
+			parallaxData.push({
+				element: element,
+				bgLayer: bgLayer
+			});
+		});
+
+		if (parallaxData.length === 0) return;
 
 		let ticking = false;
 
 		function updateParallax() {
-			const scrollY = window.pageYOffset;
+			const scrollY = window.pageYOffset || window.scrollY;
+			const windowHeight = window.innerHeight;
 			
-			parallaxElements.forEach(element => {
+			parallaxData.forEach(({ element, bgLayer }) => {
 				const rect = element.getBoundingClientRect();
-				const elementTop = rect.top + scrollY;
-				const windowHeight = window.innerHeight;
+				const elementId = element.id;
 				
-				// Only apply parallax when element is in viewport
-				if (rect.bottom >= 0 && rect.top <= windowHeight) {
-					// Calculate how much the element has scrolled into view
-					const scrolled = scrollY - elementTop + windowHeight;
-					// Parallax effect: background moves slower than content
-					const parallaxOffset = scrolled * 0.3; // 30% scroll speed for subtle effect
-					
-					// Apply background-position for parallax effect
-					element.style.backgroundPosition = `center ${parallaxOffset}px`;
+				// Slower parallax speed (20% instead of 30%) for more subtle effect
+				const parallaxSpeed = 0.2;
+				
+				// Calculate parallax offset
+				const parallaxOffset = rect.top * parallaxSpeed;
+				
+				// For bottom 3 sections (containers, ocean, ship), adjust initial position
+				// Move them up slightly to prevent negative space at top
+				let initialOffset = 0;
+				if (elementId === 'containers' || elementId === 'ocean' || elementId === 'ship') {
+					// Move background up by 15% of element height to start higher
+					const elementHeight = rect.height;
+					initialOffset = elementHeight * -0.15;
 				}
+				
+				// Apply transform to background layer
+				// Combine initial offset with parallax movement
+				const totalOffset = initialOffset + parallaxOffset;
+				bgLayer.style.transform = `translate3d(0, ${totalOffset}px, 0)`;
 			});
 			
 			ticking = false;
@@ -122,7 +189,13 @@
 
 		// Use passive listener for better performance
 		window.addEventListener('scroll', requestTick, { passive: true });
-		window.addEventListener('resize', requestTick, { passive: true });
+		window.addEventListener('resize', function() {
+			// Recalculate initial positions on resize
+			parallaxData.forEach(data => {
+				data.initialTop = data.element.getBoundingClientRect().top + window.pageYOffset;
+			});
+			requestTick();
+		}, { passive: true });
 		
 		// Initial update
 		updateParallax();

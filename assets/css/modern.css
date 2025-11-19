@@ -126,8 +126,8 @@ body {
 	text-align: center;
 	color: white;
 	background-image: url('https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1920&q=80');
-	background-size: cover;
-	background-position: center;
+	background-size: cover; /* Default - will be overridden for desktop parallax */
+	background-position: center center;
 	background-repeat: no-repeat;
 }
 
@@ -136,6 +136,7 @@ body {
 @media (prefers-reduced-motion: no-preference) {
 	.parallax-hero {
 		background-attachment: fixed;
+		background-size: 150%; /* Larger for desktop parallax to prevent negative space */
 	}
 }
 
@@ -152,8 +153,54 @@ body {
 	}
 }
 
-.parallax-hero .parallax-bg {
-	display: none; /* Not needed - background on parent */
+/* Background layers for parallax effect */
+.parallax-hero .parallax-bg,
+.parallax-section .parallax-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
+	will-change: transform;
+	/* Background will be set via JavaScript for mobile */
+	pointer-events: none; /* Allow clicks to pass through */
+}
+
+/* Desktop: Hide background layers (use CSS background-attachment: fixed) */
+@media (min-width: 769px) and (hover: hover) {
+	.parallax-hero .parallax-bg,
+	.parallax-section .parallax-bg {
+		display: none;
+	}
+}
+
+/* Mobile: Show background layers for JavaScript parallax */
+@media (max-width: 768px), (hover: none) {
+	.parallax-hero .parallax-bg {
+		display: block;
+		/* Hero: Standard sizing */
+		height: 160%;
+		top: -30%;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+	
+	.parallax-section .parallax-bg {
+		display: block;
+		/* Bottom 3 sections: Taller backgrounds to prevent negative space */
+		/* Height: 100% + 40% extra for parallax movement + 20% for initial offset */
+		height: 180%;
+		top: -40%;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		overflow: hidden;
+	}
+	
+	/* Don't remove background from parent yet - JS will handle it after copying */
 }
 
 .parallax-hero::before {
@@ -317,8 +364,8 @@ body {
 	justify-content: center;
 	text-align: center;
 	color: white;
-	background-size: cover;
-	background-position: center;
+	background-size: cover; /* Default - will be overridden for desktop parallax */
+	background-position: center center;
 	background-repeat: no-repeat;
 }
 
@@ -327,6 +374,7 @@ body {
 @media (prefers-reduced-motion: no-preference) {
 	.parallax-section {
 		background-attachment: fixed;
+		background-size: 150%; /* Larger for desktop parallax to prevent negative space */
 	}
 }
 

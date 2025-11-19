@@ -15,8 +15,10 @@ DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultan
 ### Technology Stack
 - **Static HTML5** - No framework
 - **CSS** - modern.css (homepage) + content-pages.css (content pages) + custom.css (global overrides)
-- **JavaScript** - Minimal vanilla JS for navigation only (navigation.js)
-- **Parallax:** Pure CSS using `background-attachment: fixed` (respects `prefers-reduced-motion`)
+- **JavaScript** - Minimal vanilla JS: navigation + mobile parallax fallback (navigation.js)
+- **Parallax:** 
+  - **Desktop:** Pure CSS using `background-attachment: fixed` (respects `prefers-reduced-motion`)
+  - **Mobile:** JavaScript fallback (iOS Safari disables `background-attachment: fixed`)
 - **Font:** Inter (Google Fonts, weights: 300, 400, 500, 600, 700, 800)
 - **Dev Server:** `serve` package (port 3010)
 - **Deployment:** Cloudflare Pages
