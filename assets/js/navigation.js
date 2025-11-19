@@ -1,5 +1,6 @@
-// Minimal JavaScript for Navigation Only
-// Parallax is handled by pure CSS (background-attachment: fixed)
+// Minimal JavaScript for Navigation and Mobile Parallax
+// Desktop parallax uses pure CSS (background-attachment: fixed)
+// Mobile parallax uses JavaScript (iOS Safari disables background-attachment: fixed)
 
 (function() {
 	'use strict';
@@ -73,17 +74,73 @@
 		});
 	}
 
+	// Mobile Parallax Effect (only on mobile, respects reduced motion)
+	function initMobileParallax() {
+		// Check if user prefers reduced motion
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReducedMotion) return;
+
+		// Only run on mobile devices (where background-attachment: fixed doesn't work)
+		const isMobile = window.matchMedia('(max-width: 768px)').matches || 
+		                 window.matchMedia('(hover: none)').matches;
+		if (!isMobile) return;
+
+		const parallaxElements = document.querySelectorAll('.parallax-hero, .parallax-section');
+		if (parallaxElements.length === 0) return;
+
+		let ticking = false;
+
+		function updateParallax() {
+			const scrollY = window.pageYOffset;
+			
+			parallaxElements.forEach(element => {
+				const rect = element.getBoundingClientRect();
+				const elementTop = rect.top + scrollY;
+				const windowHeight = window.innerHeight;
+				
+				// Only apply parallax when element is in viewport
+				if (rect.bottom >= 0 && rect.top <= windowHeight) {
+					// Calculate how much the element has scrolled into view
+					const scrolled = scrollY - elementTop + windowHeight;
+					// Parallax effect: background moves slower than content
+					const parallaxOffset = scrolled * 0.3; // 30% scroll speed for subtle effect
+					
+					// Apply background-position for parallax effect
+					element.style.backgroundPosition = `center ${parallaxOffset}px`;
+				}
+			});
+			
+			ticking = false;
+		}
+
+		function requestTick() {
+			if (!ticking) {
+				window.requestAnimationFrame(updateParallax);
+				ticking = true;
+			}
+		}
+
+		// Use passive listener for better performance
+		window.addEventListener('scroll', requestTick, { passive: true });
+		window.addEventListener('resize', requestTick, { passive: true });
+		
+		// Initial update
+		updateParallax();
+	}
+
 	// Initialize when DOM is ready
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', function() {
 			initMobileNav();
 			initNavbarScroll();
 			initSmoothScroll();
+			initMobileParallax();
 		});
 	} else {
 		initMobileNav();
 		initNavbarScroll();
 		initSmoothScroll();
+		initMobileParallax();
 	}
 
 })();
