@@ -1,16 +1,12 @@
 <!DOCTYPE HTML>
-<!--
-	Aerial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html lang="en">
 	<head>
 		<title>DBCA Global</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 		<link rel="canonical" href="https://www.dbcaglobal.com/" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" type="image/png" href="/assets/logo.png" />
+		<link rel="stylesheet" href="assets/css/modern.css" />
 		<link rel="stylesheet" href="assets/css/custom.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<meta name="title" content="DBCA Global – Smaller world, bigger business, one contact." />
@@ -66,7 +62,6 @@
 			},
 			"contactPoint": {
 				"@type": "ContactPoint",
-				"telephone": "+1-515-306-6005",
 				"email": "donis@dbcaglobal.com",
 				"contactType": "Customer Service",
 				"availableLanguage": ["en"]
@@ -80,38 +75,136 @@
 		}
 		</script>
 	</head>
-	<body class="is-preload homepage">
+	<body>
 		<a href="#main" class="skip-to-content">Skip to main content</a>
-		<div id="wrapper">
-			<div id="bg"></div>
-			<div id="overlay"></div>
-			<div id="main" role="main">
-
-				<!-- Header -->
-					<header id="header">
-						<h1><img src="/assets/logo.svg" alt="DBCA Global - Smaller world, bigger business, one contact" style="height: 250px;" /></h1>
-						<p>Smaller world, bigger business, one contact.</p>
-						<nav aria-label="Main navigation">
-							<p class="nav-links" style="margin-top: 2rem;">
-								<a href="/about" style="text-decoration: none; margin: 0 1rem;">About</a>
-								<a href="/services" style="text-decoration: none; margin: 0 1rem;">Services</a>
-								<a href="/why-dbca" style="text-decoration: none; margin: 0 1rem;">Why DBCA</a>
-								<a href="/contact" style="text-decoration: none; margin: 0 1rem;">Contact</a>
-							</p>
-						</nav>
-					</header>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<span class="copyright">&copy; DBCA Global LLC.</span>
-					</footer>
-
+		
+		<!-- Navigation -->
+		<nav class="main-nav" id="mainNav">
+			<div class="nav-container">
+				<a href="/" class="nav-logo-text">DBCA Global</a>
+				<ul class="nav-menu">
+					<li><a href="/about">About</a></li>
+					<li><a href="/services">Services</a></li>
+					<li><a href="/why-dbca">Why DBCA</a></li>
+					<li><a href="/contact">Contact</a></li>
+				</ul>
+				<button class="nav-toggle" aria-label="Toggle navigation">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
 			</div>
-		</div>
-		<script>
-			window.onload = function() { document.body.classList.remove('is-preload'); }
-			window.ontouchmove = function() { return false; }
-			window.onorientationchange = function() { document.body.scrollTop = 0; }
-		</script>
+		</nav>
+
+		<!-- Hero Section with Parallax -->
+		<section class="parallax-hero" id="hero">
+			<div class="parallax-bg"></div>
+			<div class="hero-content">
+				<img src="/assets/logo.svg" alt="DBCA Global" class="hero-logo" />
+				<p class="hero-tagline">Smaller world, bigger business, one contact.</p>
+				<a href="/contact" class="cta-button">Get Started</a>
+			</div>
+			<div class="scroll-indicator">
+				<span>Scroll</span>
+				<div class="scroll-arrow"></div>
+			</div>
+		</section>
+
+		<!-- About Preview Section -->
+		<section class="content-section" id="about-preview">
+			<div class="section-content">
+				<h2>Connecting Continents, Building Partnerships</h2>
+				<p class="lead">DBCA Global is a U.S.-based supply chain and consulting company specializing in procurement, distribution, and representation of international raw materials for manufacturing and specialty chemical industries.</p>
+				<a href="/about" class="section-link">Learn More About Us →</a>
+			</div>
+		</section>
+
+		<!-- Parallax Section - Shipping Containers -->
+		<section class="parallax-section" id="containers">
+			<div class="parallax-bg"></div>
+			<div class="parallax-content">
+				<h2>Global Logistics Excellence</h2>
+				<p>We handle the complexity of international supply chains so you can focus on what you do best.</p>
+			</div>
+		</section>
+
+		<!-- Services Section -->
+		<section class="content-section services-grid" id="services">
+			<div class="section-content">
+				<h2>Our Services</h2>
+				<div class="services-cards">
+					<div class="service-card">
+						<h3>For Vendors</h3>
+						<p>Fast, secure entry into the U.S. market with U.S.-based warehousing and compliance management.</p>
+						<a href="/services#vendors" class="card-link">Learn More →</a>
+					</div>
+					<div class="service-card">
+						<h3>For Customers</h3>
+						<p>Access to vetted international suppliers with competitive pricing and transparent communication.</p>
+						<a href="/services#customers" class="card-link">Learn More →</a>
+					</div>
+					<div class="service-card">
+						<h3>For Logistics Partners</h3>
+						<p>Consistent freight volumes, clear payment terms, and access to a nationally connected network.</p>
+						<a href="/services#logistics" class="card-link">Learn More →</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Parallax Section - Ocean View -->
+		<section class="parallax-section" id="ocean">
+			<div class="parallax-bg"></div>
+			<div class="parallax-content">
+				<h2>Built on Trust, Driven by Results</h2>
+				<p>We bring intellect to logistics, intention to leadership, and innovation to industries.</p>
+			</div>
+		</section>
+
+		<!-- Why DBCA Section -->
+		<section class="content-section" id="why-dbca">
+			<div class="section-content">
+				<h2>Why Choose DBCA Global?</h2>
+				<div class="features-grid">
+					<div class="feature">
+						<h3>20 Years Experience</h3>
+						<p>Founded by industry veteran Donis Bosworth with deep procurement expertise.</p>
+					</div>
+					<div class="feature">
+						<h3>Low-Risk Model</h3>
+						<p>Supplier-financed inventory programs minimize your capital exposure.</p>
+					</div>
+					<div class="feature">
+						<h3>U.S.-Based Operations</h3>
+						<p>Domestic warehousing and logistics for faster, more reliable delivery.</p>
+					</div>
+					<div class="feature">
+						<h3>Transparent Communication</h3>
+						<p>Know exactly where your products are and when they'll arrive.</p>
+					</div>
+				</div>
+				<a href="/why-dbca" class="section-link">Discover Our Advantages →</a>
+			</div>
+		</section>
+
+		<!-- Parallax Section - Cargo Ship -->
+		<section class="parallax-section" id="ship">
+			<div class="parallax-bg"></div>
+			<div class="parallax-content">
+				<h2>Ready to Get Started?</h2>
+				<p>Let's build something that lasts.</p>
+				<a href="/contact" class="cta-button">Contact Us</a>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer class="main-footer">
+			<div class="footer-content">
+				<p>&copy; DBCA Global LLC. All rights reserved.</p>
+				<p class="footer-tagline">Smaller world, bigger business, one contact.</p>
+			</div>
+		</footer>
+
+		<script src="assets/js/navigation.js"></script>
 	</body>
 </html>

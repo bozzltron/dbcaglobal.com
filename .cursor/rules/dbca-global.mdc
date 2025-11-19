@@ -1,0 +1,792 @@
+# DBCA Global Website - Development Rules & Best Practices
+
+**Repository Scope:** This file applies ONLY to the `dbcaglobal.com` repository. This is the primary workflow file that guides all maintenance tasks and development decisions.
+
+## Project Overview
+
+DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultancy website. Modern, media-rich parallax design with clean, professional aesthetics optimized for global business communication.
+
+**Company:** DBCA Global, LLC  
+**Location:** Austin, TX  
+**Target Audience:** International vendors, U.S. manufacturers, logistics partners
+
+## Architecture
+
+### Technology Stack
+- **Static HTML5** - No framework
+- **CSS** - modern.css (homepage) + content-pages.css (content pages) + custom.css (global overrides)
+- **JavaScript** - Minimal vanilla JS for navigation only (navigation.js)
+- **Parallax:** Pure CSS using `background-attachment: fixed` (respects `prefers-reduced-motion`)
+- **Font:** Inter (Google Fonts, weights: 300, 400, 500, 600, 700, 800)
+- **Dev Server:** `serve` package (port 3010)
+- **Deployment:** Cloudflare Pages
+
+### File Structure
+```
+/
+├── index.html              # Homepage (modern parallax design)
+├── about/index.html        # Company & founder
+├── services/index.html     # Service offerings
+├── why-dbca/index.html     # Value proposition
+├── contact/index.html      # Contact info
+├── assets/
+│   ├── css/
+│   │   ├── modern.css          # Homepage parallax styles (pure CSS)
+│   │   ├── content-pages.css   # Content page styles
+│   │   ├── custom.css          # Global overrides & utilities
+│   │   ├── main.css           # Legacy (not actively used)
+│   │   └── noscript.css       # Non-JS fallback
+│   ├── js/
+│   │   └── navigation.js       # Minimal JS: mobile nav, scroll effects, smooth scroll
+│   ├── logo.svg
+│   └── logo.png
+├── docs/                   # Private (gitignored)
+├── _redirects             # Cloudflare URL routing
+└── _headers               # Security headers
+```
+
+### Pure CSS Parallax Implementation
+**CRITICAL:** Parallax is achieved with pure CSS, not JavaScript.
+
+```css
+/* Parallax using background-attachment: fixed */
+.parallax-bg {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Respects reduced motion preferences */
+@media (prefers-reduced-motion: no-preference) {
+  .parallax-bg {
+    background-attachment: fixed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-bg {
+    background-attachment: scroll;
+  }
+}
+```
+
+**Benefits:**
+- Better performance (no JavaScript calculations)
+- Respects accessibility preferences automatically
+- Simpler codebase
+- Works even if JavaScript fails
+
+## Core Requirements Checklist
+
+### 1. Google Analytics Verification
+**MUST CHECK BEFORE DEPLOYMENT:**
+- [ ] Google Analytics script is present in `<head>` section
+- [ ] Analytics only loads on production domain (`www.dbcaglobal.com`)
+- [ ] Tracking ID: `G-KCMM25H07C` is correct
+- [ ] Test analytics events are firing correctly
+- [ ] Page views are being tracked
+
+**Implementation Pattern:**
+```html
+<script>
+  if (location.hostname === "www.dbcaglobal.com") {
+    var gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KCMM25H07C";
+    document.head.appendChild(gtagScript);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KCMM25H07C');
+  }
+</script>
+```
+
+### 2. Accessibility Standards
+**MUST VERIFY:**
+- [ ] Skip-to-content link is present and functional
+- [ ] All images have descriptive `alt` attributes
+- [ ] All links have descriptive text (not just "click here")
+- [ ] Navigation uses semantic HTML (`<nav>`, `<ul>`, `<li>`)
+- [ ] ARIA labels on interactive elements (`aria-label`, `aria-current`)
+- [ ] Color contrast meets WCAG AA standards (4.5:1 for text)
+- [ ] Keyboard navigation works (Tab, Enter, Escape)
+- [ ] Focus indicators are visible
+- [ ] Reduced motion preferences are respected (`prefers-reduced-motion`) - **Pure CSS parallax handles this automatically**
+- [ ] Semantic HTML structure (`<main>`, `<header>`, `<footer>`, `<section>`)
+
+**Testing Tools:**
+- WAVE browser extension
+- axe DevTools
+- Lighthouse accessibility audit
+- Keyboard-only navigation test
+
+### 3. Open Graph Meta Tags Optimization
+**REQUIRED FOR EACH PAGE:**
+- [ ] `og:type` - Always "website"
+- [ ] `og:url` - Full canonical URL
+- [ ] `og:title` - Page-specific title (max 60 chars)
+- [ ] `og:description` - Compelling description (150-160 chars)
+- [ ] `og:image` - High-quality image (1200x630px recommended)
+- [ ] `og:image:alt` - Descriptive alt text
+- [ ] `og:site_name` - "DBCA Global"
+- [ ] `og:locale` - "en_US"
+- [ ] Twitter card meta tags (`twitter:card`, `twitter:title`, etc.)
+
+**Template Pattern:**
+```html
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.dbcaglobal.com/[page]" />
+<meta property="og:title" content="[Page Title] - DBCA Global" />
+<meta property="og:description" content="[150-160 char description]" />
+<meta property="og:image" content="https://www.dbcaglobal.com/assets/logo.png" />
+<meta property="og:image:alt" content="DBCA Global Logo" />
+<meta property="og:site_name" content="DBCA Global" />
+<meta property="og:locale" content="en_US" />
+```
+
+### 4. LLM Consumption Optimization
+**STRUCTURED DATA & SEMANTIC HTML:**
+- [ ] JSON-LD structured data present (Organization schema on homepage)
+- [ ] Semantic HTML5 elements used throughout
+- [ ] Clear heading hierarchy (h1 → h2 → h3)
+- [ ] Descriptive link text (not generic "click here")
+- [ ] Alt text describes image content and context
+- [ ] Meta descriptions are informative and keyword-rich
+- [ ] Content is well-organized with clear sections
+- [ ] Important information is in text (not just images)
+
+**Structured Data Pattern:**
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "DBCA Global",
+  "legalName": "DBCA Global, LLC",
+  "url": "https://www.dbcaglobal.com",
+  "logo": "https://www.dbcaglobal.com/assets/logo.png",
+  "description": "U.S.-based procurement and logistics consultancy...",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Austin",
+    "addressRegion": "TX",
+    "addressCountry": "US"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-515-306-6005",
+    "email": "donis@dbcaglobal.com",
+    "contactType": "Customer Service"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Donis Bosworth",
+    "jobTitle": "Founder & Managing Director"
+  }
+}
+</script>
+```
+
+### 5. PWA Best Practices with Vite PWA Plugin
+**REQUIRED SETUP:**
+- [ ] Install `vite-plugin-pwa`: `npm install -D vite-plugin-pwa`
+- [ ] Configure in `vite.config.ts` with proper manifest
+- [ ] Service worker registration
+- [ ] Offline fallback page
+- [ ] Cache strategies for assets
+- [ ] App icons in multiple sizes (192x192, 512x512)
+- [ ] Theme color matches brand (#348cb2)
+- [ ] Display mode: "standalone" or "minimal-ui"
+
+**Vite Config Pattern:**
+```typescript
+import { VitePWA } from 'vite-plugin-pwa'
+
+export default defineConfig({
+  plugins: [
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'DBCA Global',
+        short_name: 'DBCA',
+        theme_color: '#348cb2',
+        icons: [/* icon config */]
+      }
+    })
+  ]
+})
+```
+
+**Performance Targets:**
+- [ ] Lighthouse PWA score: 90+
+- [ ] First Contentful Paint: < 1.5s
+- [ ] Time to Interactive: < 3.5s
+- [ ] Cumulative Layout Shift: < 0.1
+
+### 6. Code Conciseness & Reusability
+**PRINCIPLES:**
+- [ ] Shared CSS classes for common patterns
+- [ ] Reusable components/partials where possible
+- [ ] DRY (Don't Repeat Yourself) - extract common code
+- [ ] Consistent naming conventions
+- [ ] Modular CSS architecture
+- [ ] Minimal JavaScript (navigation only)
+- [ ] Pure CSS for animations and parallax
+- [ ] Template patterns for similar pages
+
+**File Organization:**
+```
+assets/
+  css/
+    modern.css          # Homepage styles (pure CSS parallax)
+    content-pages.css   # Shared content page styles
+    custom.css          # Global overrides
+  js/
+    navigation.js       # Minimal: mobile nav, scroll effects, smooth scroll
+```
+
+**Reusable Patterns:**
+- Navigation component (same across all pages)
+- Footer component (same across all pages)
+- Hero section pattern
+- Content block pattern
+- Parallax section pattern (pure CSS)
+
+### 7. Cloudflare Pages Optimization
+**DEPLOYMENT REQUIREMENTS:**
+- [ ] Static site generation (no server-side rendering)
+- [ ] All assets use absolute paths (`/assets/...`)
+- [ ] `_headers` file for security headers
+- [ ] `_redirects` file for URL routing
+- [ ] Build output in root directory (no `dist/` needed for static)
+- [ ] No dynamic server-side code
+- [ ] Custom domain configured
+- [ ] SSL/TLS enabled
+
+**Cloudflare Headers (`_headers`):**
+```
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+```
+
+**_redirects File:**
+```
+# Rewrite clean URLs (200 = serve content without redirect)
+/about            /about/           200
+/services         /services/        200
+/why-dbca         /why-dbca/        200
+/contact          /contact/         200
+
+# Redirect legacy URLs
+/about.html       /about            301
+/services.html    /services         301
+/why-dbca.html    /why-dbca         301
+/contact.html     /contact          301
+/index.html       /                 301
+```
+
+### 8. Link Verification
+**MUST CHECK ALL LINKS:**
+- [ ] All internal links use absolute paths (`/about`, `/services`)
+- [ ] All external links open in new tab (`target="_blank" rel="noopener noreferrer"`)
+- [ ] Navigation links work on all pages
+- [ ] Footer links work
+- [ ] CTA buttons link correctly
+- [ ] Email links use `mailto:` protocol
+- [ ] Phone links use `tel:` protocol
+- [ ] No broken links (404s)
+- [ ] Anchor links work (`#section-id`)
+
+**Link Pattern:**
+```html
+<!-- Internal -->
+<a href="/about">About</a>
+
+<!-- External -->
+<a href="https://example.com" target="_blank" rel="noopener noreferrer">External</a>
+
+<!-- Email -->
+<a href="mailto:donis@dbcaglobal.com">Email</a>
+
+<!-- Phone -->
+<a href="tel:+15153066005">Phone</a>
+```
+
+## Design System
+
+### Typography
+- **Font Family:** Inter (weights: 300, 400, 500, 600, 700, 800)
+- **Headings:** Weight 700-800, letter-spacing -0.03em
+- **Body:** Weight 400, line-height 1.7-1.8
+- **Font Smoothing:** Enabled (`-webkit-font-smoothing: antialiased`)
+
+### Colors
+- **Primary:** #348cb2 (Brand Blue)
+- **Primary Dark:** #2a7a9a (Hover states)
+- **Text:** #333 (Headings), #444 (Body), #666 (Secondary)
+- **Background:** #fff (Main), #f8f9fa (Sections)
+- **Footer:** #1a1a1a (Dark)
+- **Hero Overlay:** Gradient from `rgba(52, 140, 178, 0.85)` to `rgba(0, 0, 0, 0.6)`
+
+### Spacing
+- **Content Max Width:** 1000px (content pages), 1200px (homepage)
+- **Section Padding:** 5rem vertical, 2rem horizontal
+- **Content Block Margin:** 4rem bottom
+- **Mobile Padding:** 1.5rem horizontal
+
+### Layout
+
+**Homepage:**
+- Full-screen hero with pure CSS parallax background
+- Fixed navigation bar (transparent → white on scroll)
+- Parallax sections with background images (pure CSS)
+- Content sections with cards and grids
+- Max width: 1200px for content sections
+
+**Content Pages:**
+- Hero section (50vh, pure CSS parallax background)
+- Main content area: max-width 1000px, padding 5rem vertical
+- Content blocks: 4rem bottom margin
+- Service sections: Card-style with left border accent
+- Max width: 1000px (wider for better readability)
+
+### Responsive Breakpoints
+- **Tablet:** 768px and below
+- **Mobile:** 480px and below
+- Mobile-first responsive design
+- Touch targets: minimum 44px height
+
+## Content Structure
+
+### Homepage Template
+```html
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>DBCA Global</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <link rel="canonical" href="https://www.dbcaglobal.com/" />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="stylesheet" href="assets/css/modern.css" />
+  <link rel="stylesheet" href="assets/css/custom.css" />
+  <!-- Open Graph + Twitter cards -->
+  <!-- Google Analytics -->
+  <!-- Structured Data -->
+</head>
+<body>
+  <a href="#main" class="skip-to-content">Skip to main content</a>
+  
+  <!-- Fixed Navigation -->
+  <nav class="main-nav" id="mainNav">
+    <div class="nav-container">
+      <a href="/" class="nav-logo-text">DBCA Global</a>
+      <ul class="nav-menu">
+        <li><a href="/about">About</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/why-dbca">Why DBCA</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Pure CSS Parallax) -->
+  <section class="parallax-hero" id="hero">
+    <div class="parallax-bg"></div>
+    <div class="hero-content">
+      <img src="/assets/logo.svg" alt="DBCA Global" class="hero-logo" />
+      <p class="hero-tagline">Smaller world, bigger business, one contact.</p>
+      <a href="/contact" class="cta-button">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Content Sections -->
+  <section class="content-section">
+    <!-- Content here -->
+  </section>
+
+  <!-- Parallax Sections (Pure CSS) -->
+  <section class="parallax-section">
+    <div class="parallax-bg"></div>
+    <div class="parallax-content">
+      <!-- Content here -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <!-- Footer content -->
+  </footer>
+
+  <script src="assets/js/navigation.js"></script>
+</body>
+</html>
+```
+
+### Content Page Template
+```html
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>[Page Name] - DBCA Global</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <link rel="canonical" href="https://www.dbcaglobal.com/[path]" />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="stylesheet" href="/assets/css/modern.css" />
+  <link rel="stylesheet" href="/assets/css/content-pages.css" />
+  <!-- Open Graph + Twitter cards -->
+</head>
+<body class="content-page">
+  <a href="#main" class="skip-to-content">Skip to main content</a>
+  
+  <!-- Fixed Navigation (same as homepage) -->
+  <nav class="main-nav" id="mainNav">
+    <!-- Navigation structure -->
+  </nav>
+
+  <!-- Page Hero (Pure CSS Parallax) -->
+  <section class="content-page-hero">
+    <div class="hero-bg" style="background-image: url('...');"></div>
+    <div class="content-page-hero-content">
+      <h1>Page Title</h1>
+      <p>Subtitle or description</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="content-page-main" id="main" role="main">
+    <div class="content-block">
+      <h2>Section Title</h2>
+      <p>Content...</p>
+      <ul>
+        <li>List items...</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="content-page-footer">
+    <!-- Footer content -->
+  </footer>
+
+  <script src="/assets/js/navigation.js"></script>
+</body>
+</html>
+```
+
+### Key Business Information
+
+**Contact:**
+- Email: donis@dbcaglobal.com
+- Phone: +1-515-306-6005
+- Location: Austin, Texas, United States
+- Response time: Within 24 hours (business days)
+
+**Taglines:**
+- Homepage: "Smaller world, bigger business, one contact."
+- About: "Born from hustle. Built with heart."
+- Why DBCA: "Built on Trust. Driven by Results."
+
+**Core Values (Three Non-Negotiables):**
+- **Integrity:** Do what's right; responsible sourcing, data-backed promises
+- **Intention:** Purpose and precision; transparency in all operations
+- **Impact:** Leave everything stronger; science-driven, sustainability-focused
+
+**Services:**
+- **For Vendors:** U.S. market entry, warehousing, compliance, freight
+- **For Customers:** Vetted suppliers, competitive pricing, transparency
+- **For Logistics Partners:** Consistent volumes, clear terms, national network
+
+**Founder:**
+- Donis Bosworth, Founder & Managing Director
+- 20 years global trade and procurement experience
+
+### Page Content Summary
+
+**Homepage:**
+- Hero with logo and tagline
+- About preview section
+- Parallax section (containers) - pure CSS
+- Services grid (3 cards)
+- Parallax section (ocean) - pure CSS
+- Why DBCA features grid
+- Parallax section (ship) with CTA - pure CSS
+
+**About Page:**
+- Company origin story
+- Four service areas: Procurement & Representation, Supply Chain Optimization, Strategic Consulting, Operational Support
+- Partners: global producers + U.S. manufacturers
+- Three Non-Negotiables (detailed with sustainability emphasis)
+- Founder bio with Founder's Message blockquote
+
+**Services Page:**
+- Three audience segments (vendors, customers, logistics partners)
+- Service details for each segment in card-style sections
+- Each section has ID anchor (#vendors, #customers, #logistics)
+
+**Why DBCA Page:**
+- Value proposition
+- Competitive advantages
+- Proof points
+- Core values
+
+**Contact Page:**
+- Contact information
+- Contact methods grid (email, phone, location)
+- Response expectations
+
+## Design Patterns
+
+### Pure CSS Parallax Sections
+- Background images from Unsplash (public domain)
+- Uses `background-attachment: fixed` for parallax effect
+- Automatically respects `prefers-reduced-motion` (falls back to `scroll`)
+- Overlay gradient for text readability
+- Height: 70vh (homepage), 50vh (content pages)
+
+### Navigation
+- Fixed position, transparent → white on scroll
+- Logo text: "DBCA Global" (brand blue)
+- Mobile hamburger menu (JavaScript required)
+- Smooth scroll for anchor links (JavaScript)
+
+### Content Blocks
+- Wide max-width (1000px) for better readability
+- Generous spacing (4rem between blocks)
+- Clear typography hierarchy
+- Service sections use card-style with accent border
+
+## JavaScript Architecture
+
+**navigation.js** - Minimal JavaScript (only what can't be done in CSS):
+- Mobile navigation toggle
+- Navbar scroll effect (transparent → white)
+- Smooth scroll for anchor links (with offset for fixed navbar)
+
+**What's NOT in JavaScript:**
+- Parallax effects (pure CSS)
+- Animations (pure CSS)
+- Scroll-triggered animations (can be CSS if needed)
+
+## Pre-Deployment Checklist
+
+Before deploying any changes:
+
+- [ ] Google Analytics verified
+- [ ] Accessibility audit passed (Lighthouse 90+)
+- [ ] All Open Graph tags present and correct
+- [ ] Structured data validated (Google Rich Results Test)
+- [ ] PWA manifest configured (if using Vite)
+- [ ] All links tested and working
+- [ ] Mobile responsive (test on real devices)
+- [ ] Cross-browser tested (Chrome, Firefox, Safari, Edge)
+- [ ] Performance optimized (Lighthouse 90+)
+- [ ] No console errors
+- [ ] Images optimized (WebP where possible)
+- [ ] Code is concise and DRY
+- [ ] Pure CSS parallax working correctly
+- [ ] Reduced motion preferences respected
+- [ ] Cloudflare Pages build succeeds
+
+## Testing Commands
+
+```bash
+# Test locally
+npm run dev
+
+# Check accessibility
+# Use Lighthouse in Chrome DevTools
+
+# Validate structured data
+# https://search.google.com/test/rich-results
+
+# Test PWA
+# Use Lighthouse PWA audit
+```
+
+## Common Patterns
+
+### Navigation Component
+```html
+<nav class="main-nav" id="mainNav">
+  <div class="nav-container">
+    <a href="/" class="nav-logo-text">DBCA Global</a>
+    <ul class="nav-menu">
+      <li><a href="/about">About</a></li>
+      <!-- ... -->
+    </ul>
+  </div>
+</nav>
+```
+
+### Content Block Pattern
+```html
+<div class="content-block">
+  <h2>Section Title</h2>
+  <p>Content here...</p>
+</div>
+```
+
+### Hero Section Pattern (Pure CSS Parallax)
+```html
+<section class="content-page-hero">
+  <div class="hero-bg" style="background-image: url('...');"></div>
+  <div class="content-page-hero-content">
+    <h1>Page Title</h1>
+    <p>Subtitle</p>
+  </div>
+</section>
+```
+
+## Performance Targets
+
+- **Lighthouse Score:** 90+ (all categories)
+- **First Contentful Paint:** < 1.5s
+- **Largest Contentful Paint:** < 2.5s
+- **Time to Interactive:** < 3.5s
+- **Cumulative Layout Shift:** < 0.1
+- **Total Blocking Time:** < 200ms
+
+## Browser Support
+
+- Chrome (last 2 versions)
+- Firefox (last 2 versions)
+- Safari (last 2 versions)
+- Edge (last 2 versions)
+- Mobile Safari (iOS 12+)
+- Chrome Mobile (Android 8+)
+
+## Code Cleanup & Maintenance
+
+### Regular Code Review Checklist
+**Before committing changes, review:**
+
+- [ ] Remove unused CSS files and styles
+- [ ] Remove unused JavaScript files
+- [ ] Remove unused HTML attributes (e.g., `data-speed` if not using JS parallax)
+- [ ] Remove commented-out code (unless documenting why)
+- [ ] Remove duplicate code (consolidate into reusable patterns)
+- [ ] Remove unused images/assets
+- [ ] Verify all referenced files exist
+- [ ] Check for orphaned files (files not referenced anywhere)
+- [ ] Remove unused CSS classes
+- [ ] Remove unused JavaScript functions
+- [ ] Clean up console.log statements
+- [ ] Remove test/debug code
+
+### Code Cleanup Process
+
+**1. Identify Unused Files:**
+```bash
+# Find files not referenced in HTML
+grep -r "filename" *.html about/*.html services/*.html
+
+# Find unused CSS classes
+# Use browser DevTools Coverage tool or tools like PurgeCSS
+
+# Find unused JavaScript
+# Use browser DevTools Coverage tool
+```
+
+**2. Remove Unused Code:**
+- Delete unused files completely
+- Remove unused CSS rules
+- Remove unused JavaScript functions
+- Remove unused HTML attributes
+- Remove commented-out code (unless it documents important decisions)
+
+**3. Verify After Cleanup:**
+- [ ] Site still works correctly
+- [ ] All pages load properly
+- [ ] No broken references
+- [ ] No console errors
+- [ ] Mobile navigation still works
+- [ ] Parallax effects still work
+
+### Currently Unused Files (Keep for Reference)
+- `assets/css/main.css` - Legacy theme file, not actively used but kept for reference
+- `assets/css/images/` - Old theme assets (bg.jpg, overlay-pattern.png, overlay.svg), only referenced in main.css
+
+**Note:** These can be removed if confirmed they're not needed for any fallback scenarios.
+
+### Removed Files (No Longer Needed)
+- `assets/js/parallax.js` - Replaced by pure CSS parallax + navigation.js
+- `data-speed` attributes - Not needed for pure CSS parallax
+
+### DO:
+- Use `modern.css` for homepage styles
+- Use `content-pages.css` for content page styles
+- Use `custom.css` for global overrides only
+- Maintain consistent navigation across all pages
+- Use `.content-block` structure for content sections
+- Update meta descriptions when content changes significantly
+- Preserve semantic HTML structure
+- Keep all pages mobile-responsive
+- Use pure CSS for parallax (no JavaScript)
+- Verify all links work
+- Test reduced motion preferences
+- **Remove unused code regularly**
+- **Keep codebase clean and minimal**
+
+### DON'T:
+- Modify `main.css` (legacy file, not actively used - can be removed if confirmed unused)
+- Use JavaScript for parallax (use pure CSS)
+- Remove parallax effects without considering accessibility
+- Change navigation structure without updating all pages
+- Add JavaScript frameworks
+- Commit `/docs` folder
+- Skip accessibility features
+- Break mobile navigation
+- **Leave unused code in the codebase**
+- **Add files without checking if similar functionality exists**
+
+### CSS Architecture
+- **modern.css** - Homepage parallax design (pure CSS), navigation, hero sections
+- **content-pages.css** - Content page styles, hero sections, content blocks
+- **custom.css** - Global font imports, skip-to-content, shared utilities
+- Mobile-first responsive design
+- Media queries: tablet 768px, mobile 480px
+- Pure CSS parallax with `background-attachment: fixed`
+
+### When Updating Content:
+1. Maintain heading hierarchy (h1 → h2 → h3)
+2. Use consistent `.content-block` structure
+3. Keep text left-aligned within content blocks
+4. Test mobile font sizes and spacing
+5. Update Open Graph descriptions if page changes significantly
+6. Verify parallax images load correctly (pure CSS)
+7. Test navigation on all pages
+8. Verify reduced motion preferences work
+
+### Image Sources
+- Hero backgrounds: Unsplash (public domain)
+- Container images: Unsplash shipping/container photos
+- Ocean images: Unsplash ocean views
+- Ship images: Unsplash cargo ship photos
+- All images optimized for web (WebP preferred)
+
+## Notes
+
+- Always use semantic HTML
+- **Prefer CSS over JavaScript for animations and effects**
+- Pure CSS parallax is preferred (better performance, accessibility)
+- Optimize images before adding to site
+- Keep JavaScript minimal (navigation only)
+- Test on real devices, not just simulators
+- Monitor Core Web Vitals in production
+- Parallax automatically respects `prefers-reduced-motion` via CSS media queries
+
+---
+
+**Last Updated:** December 2024  
+**Design Version:** Modern Parallax (v2.0) - Pure CSS  
+**Maintained By:** AI Coding Assistants  
+**Status:** Production-ready, optimized, accessible, modern design

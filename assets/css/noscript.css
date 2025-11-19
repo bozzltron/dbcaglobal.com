@@ -1,27 +1,32 @@
 /*
-	Aerial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+	Noscript Styles for DBCA Global
+	Fallback styles when JavaScript is disabled
 */
 
-/* Wrapper */
+/* Ensure navigation is visible without JS */
+.main-nav {
+	position: relative;
+	background: rgba(255, 255, 255, 0.98);
+}
 
-	#wrapper {
-		opacity: 1 !important;
-	}
+.nav-menu {
+	display: flex !important;
+	position: static !important;
+	left: auto !important;
+}
 
-/* Overlay */
+.nav-toggle {
+	display: none;
+}
 
-	#overlay {
-		opacity: 1 !important;
-	}
+/* Ensure parallax backgrounds still display */
+.parallax-bg {
+	background-attachment: scroll;
+}
 
-/* Header */
-
-	#header {
-		opacity: 1 !important;
-	}
-
-		#header nav li {
-			opacity: 1 !important;
-		}
+/* Ensure content is visible */
+.content-section,
+.content-block {
+	opacity: 1 !important;
+	transform: none !important;
+}

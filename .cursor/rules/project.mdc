@@ -1,8 +1,10 @@
 # DBCA Global Website - Project Rules & Context
 
+**Repository Scope:** This file applies ONLY to the `dbcaglobal.com` repository.
+
 ## Project Overview
 
-DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultancy website. Static HTML site optimized for AI-assisted maintenance.
+DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultancy website. Modern, media-rich parallax design with clean, professional aesthetics optimized for global business communication.
 
 **Company:** DBCA Global, LLC  
 **Location:** Austin, TX  
@@ -12,24 +14,29 @@ DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultan
 
 ### Technology Stack
 - **Static HTML5** - No framework
-- **CSS** - custom.css (overrides) + main.css (theme base)
-- **Font:** Open Sans (Google Fonts, weights: 300, 400, 600, 700)
+- **CSS** - modern.css (homepage) + content-pages.css (content pages) + custom.css (global overrides)
+- **JavaScript** - Vanilla JS for parallax effects (parallax.js)
+- **Font:** Inter (Google Fonts, weights: 300, 400, 500, 600, 700, 800)
 - **Dev Server:** `serve` package (port 3010)
 - **Deployment:** Cloudflare Pages
 
 ### File Structure
 ```
 /
-├── index.html              # Homepage
+├── index.html              # Homepage (modern parallax design)
 ├── about/index.html        # Company & founder
 ├── services/index.html     # Service offerings
 ├── why-dbca/index.html     # Value proposition
 ├── contact/index.html      # Contact info
 ├── assets/
 │   ├── css/
-│   │   ├── custom.css     # All custom styles
-│   │   ├── main.css       # Theme base (HTML5 UP Aerial)
-│   │   └── noscript.css   # Non-JS fallback
+│   │   ├── modern.css          # Homepage parallax styles
+│   │   ├── content-pages.css   # Content page styles
+│   │   ├── custom.css          # Global overrides & utilities
+│   │   ├── main.css           # Legacy (not actively used)
+│   │   └── noscript.css       # Non-JS fallback
+│   ├── js/
+│   │   └── parallax.js        # Parallax scrolling & navigation
 │   ├── logo.svg
 │   └── logo.png
 ├── docs/                   # Private (gitignored)
@@ -44,38 +51,117 @@ DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultan
 ## Design System
 
 ### Colors
-- **Primary Blue:** `#348cb2` (headers, links, accents)
-- **Dark Gray:** `#444444` (taglines)
-- **Medium Gray:** `#555555` (strong text)
-- **Body Text:** `#333` (paragraphs, lists)
-- **Content Panes:** `rgba(255,255,255,0.85)` (85% opacity)
-- **Contact Boxes:** `rgba(52,140,178,0.55)`
+- **Primary Blue:** `#348cb2` (headers, links, accents, brand color)
+- **Primary Dark:** `#2a7a9a` (hover states)
+- **Text:** `#333` (headings), `#444` (body), `#666` (secondary)
+- **Background:** `#fff` (main), `#f8f9fa` (sections)
+- **Footer:** `#1a1a1a` (dark background)
+- **Hero Overlay:** Gradient from `rgba(52, 140, 178, 0.85)` to `rgba(0, 0, 0, 0.6)`
 
 ### Typography
-- **Font:** 'Open Sans', sans-serif
-- **H1:** Logo image (250px homepage, 120px desktop pages, 80px tablet, 60px mobile)
-- **H2:** 2rem, `#348cb2`, bold 700, uppercase, no top margin
-- **H3:** 1.5rem, `#348cb2`, semi-bold 600, no top margin
-- **Body:** `#333`, 1.8 line-height, 1.25rem bottom margin
-- **Links:** `#348cb2`, hover: scale 1.05 + underline (0.3s ease transition)
+- **Font Family:** Inter (weights: 300, 400, 500, 600, 700, 800)
+- **Font Smoothing:** Enabled (`-webkit-font-smoothing: antialiased`)
+- **H1 (Hero):** 4.5rem desktop, 2.5rem tablet, 2rem mobile, weight 800, letter-spacing -0.03em
+- **H2:** 3rem desktop, 2rem tablet, 1.75rem mobile, weight 700, `#348cb2`, letter-spacing -0.03em
+- **H3:** 1.75rem desktop, 1.5rem tablet, 1.35rem mobile, weight 700, `#348cb2`, letter-spacing -0.02em
+- **Body:** 1.125rem desktop, 1rem mobile, weight 400, line-height 1.7-1.8, color `#444`
+- **Links:** `#348cb2`, hover: `#2a7a9a`, underline on hover, weight 500-600
 
 ### Layout
-- **Top Padding:** 6rem desktop, 4rem tablet, 3rem mobile
-- **Side Padding:** 2rem desktop, 1rem tablet, 0.75rem mobile
-- **Content Boxes:** White, 8px border-radius, 2rem padding, 2rem bottom margin
-- **Max Width:** 900px (content pages)
-- **List Bullets:** Disc style (filled circles)
-- **Emoji Spacing:** 0.5rem right padding
+
+**Homepage:**
+- Full-screen hero with parallax background
+- Fixed navigation bar (transparent → white on scroll)
+- Parallax sections with background images
+- Content sections with cards and grids
+- Max width: 1200px for content sections
+
+**Content Pages:**
+- Hero section (50vh, parallax background)
+- Main content area: max-width 1000px, padding 5rem vertical
+- Content blocks: 4rem bottom margin
+- Service sections: Card-style with left border accent
+- Max width: 1000px (wider than old 900px for better readability)
+
+**Spacing:**
+- Section padding: 5rem vertical, 2rem horizontal (desktop)
+- Content block margin: 4rem bottom
+- Mobile padding: 2rem vertical, 1rem horizontal
 
 ### Responsive Breakpoints
 - **Tablet:** 768px and below
-- **Mobile:** 480px and below (increased font sizes for readability)
-  - Base: 1.15rem, H2: 1.65rem, H3: 1.4rem, Nav: 1.3rem
-  - Line height: 1.7 for paragraphs
+- **Mobile:** 480px and below
+- Mobile-first responsive design
+- Touch targets: minimum 44px height
 
 ## Content Structure
 
-### Page Template
+### Homepage Template
+```html
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>DBCA Global</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <link rel="canonical" href="https://www.dbcaglobal.com/" />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="stylesheet" href="assets/css/modern.css" />
+  <link rel="stylesheet" href="assets/css/custom.css" />
+  <!-- Open Graph + Twitter cards -->
+  <!-- Google Analytics -->
+  <!-- Structured Data -->
+</head>
+<body>
+  <a href="#main" class="skip-to-content">Skip to main content</a>
+  
+  <!-- Fixed Navigation -->
+  <nav class="main-nav" id="mainNav">
+    <div class="nav-container">
+      <a href="/" class="nav-logo-text">DBCA Global</a>
+      <ul class="nav-menu">
+        <li><a href="/about">About</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/why-dbca">Why DBCA</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="parallax-hero" id="hero">
+    <div class="parallax-bg" data-speed="0.5"></div>
+    <div class="hero-content">
+      <img src="/assets/logo.svg" alt="DBCA Global" class="hero-logo" />
+      <p class="hero-tagline">Smaller world, bigger business, one contact.</p>
+      <a href="/contact" class="cta-button">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Content Sections -->
+  <section class="content-section">
+    <!-- Content here -->
+  </section>
+
+  <!-- Parallax Sections -->
+  <section class="parallax-section">
+    <div class="parallax-bg" data-speed="0.3"></div>
+    <div class="parallax-content">
+      <!-- Content here -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <!-- Footer content -->
+  </footer>
+
+  <script src="assets/js/parallax.js"></script>
+</body>
+</html>
+```
+
+### Content Page Template
 ```html
 <!DOCTYPE HTML>
 <html lang="en">
@@ -84,48 +170,45 @@ DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultan
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <link rel="canonical" href="https://www.dbcaglobal.com/[path]" />
-  <link rel="stylesheet" href="/assets/css/main.css" />
-  <link rel="stylesheet" href="/assets/css/custom.css" />
-  <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
-  <meta name="title" content="[SEO Title]" />
-  <meta name="description" content="[150-160 chars]" />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="stylesheet" href="/assets/css/modern.css" />
+  <link rel="stylesheet" href="/assets/css/content-pages.css" />
   <!-- Open Graph + Twitter cards -->
 </head>
-<body class="is-preload content-page">
+<body class="content-page">
   <a href="#main" class="skip-to-content">Skip to main content</a>
-  <div id="wrapper">
-    <div id="bg"></div>
-    <div id="overlay"></div>
-    <div id="main" role="main">
-      <header id="header">
-        <h1><a href="/"><img src="/assets/logo.svg" alt="DBCA Global" /></a></h1>
-        <nav aria-label="Main navigation">
-          <p class="nav-links">
-            <a href="/about">About</a>
-            <a href="/services">Services</a>
-            <a href="/why-dbca">Why DBCA</a>
-            <a href="/contact">Contact</a>
-          </p>
-        </nav>
-      </header>
-      
-      <div class="content">
-        <h2>Section Title</h2>
-        <h3>Subsection</h3>
-        <p>Content...</p>
-        <ul><li>List items...</li></ul>
-      </div>
-      
-      <footer id="footer">
-        <span class="copyright">&copy; DBCA Global LLC.</span>
-      </footer>
+  
+  <!-- Fixed Navigation (same as homepage) -->
+  <nav class="main-nav" id="mainNav">
+    <!-- Navigation structure -->
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="content-page-hero">
+    <div class="hero-bg" style="background-image: url('...');"></div>
+    <div class="content-page-hero-content">
+      <h1>Page Title</h1>
+      <p>Subtitle or description</p>
     </div>
-  </div>
-  <script>
-    window.onload = function() { document.body.classList.remove('is-preload'); }
-    window.ontouchmove = function() { return false; }
-    window.onorientationchange = function() { document.body.scrollTop = 0; }
-  </script>
+  </section>
+
+  <!-- Main Content -->
+  <main class="content-page-main" id="main" role="main">
+    <div class="content-block">
+      <h2>Section Title</h2>
+      <p>Content...</p>
+      <ul>
+        <li>List items...</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="content-page-footer">
+    <!-- Footer content -->
+  </footer>
+
+  <script src="/assets/js/parallax.js"></script>
 </body>
 </html>
 ```
@@ -134,8 +217,8 @@ DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultan
 
 **Contact:**
 - Email: donis@dbcaglobal.com
-- WhatsApp & WeChat available
-- Location: Austin, Texas
+- Phone: +1-515-306-6005
+- Location: Austin, Texas, United States
 - Response time: Within 24 hours (business days)
 
 **Taglines:**
@@ -153,61 +236,99 @@ DBCA Global (dbcaglobal.com) is a U.S.-based procurement and logistics consultan
 - **For Customers:** Vetted suppliers, competitive pricing, transparency
 - **For Logistics Partners:** Consistent volumes, clear terms, national network
 
-**Industries:**
-- Leather and Tanning
-- Wastewater Treatment
-- Animal Feed and Nutrition
-
 **Founder:**
 - Donis Bosworth, Founder & Managing Director
 - 20 years global trade and procurement experience
 
 ### Page Content Summary
 
+**Homepage:**
+- Hero with logo and tagline
+- About preview section
+- Parallax section (containers)
+- Services grid (3 cards)
+- Parallax section (ocean)
+- Why DBCA features grid
+- Parallax section (ship) with CTA
+
 **About Page:**
 - Company origin story
 - Four service areas: Procurement & Representation, Supply Chain Optimization, Strategic Consulting, Operational Support
 - Partners: global producers + U.S. manufacturers
 - Three Non-Negotiables (detailed with sustainability emphasis)
-- Founder bio
+- Founder bio with Founder's Message blockquote
 
 **Services Page:**
 - Three audience segments (vendors, customers, logistics partners)
-- Service details for each segment
-- Industries served
+- Service details for each segment in card-style sections
+- Each section has ID anchor (#vendors, #customers, #logistics)
 
 **Why DBCA Page:**
 - Value proposition
 - Competitive advantages
 - Proof points
+- Core values
 
 **Contact Page:**
 - Contact information
-- Three communication methods (email, WhatsApp, WeChat)
+- Contact methods grid (email, phone, location)
 - Response expectations
+
+## Design Patterns
+
+### Parallax Sections
+- Background images from Unsplash (public domain)
+- Parallax speed controlled by `data-speed` attribute (0.3-0.5)
+- Overlay gradient for text readability
+- Height: 70vh (homepage), 50vh (content pages)
+
+### Navigation
+- Fixed position, transparent → white on scroll
+- Logo text: "DBCA Global" (brand blue)
+- Mobile hamburger menu
+- Smooth scroll for anchor links
+
+### Content Blocks
+- Wide max-width (1000px) for better readability
+- Generous spacing (4rem between blocks)
+- Clear typography hierarchy
+- Service sections use card-style with accent border
 
 ## Best Practices
 
 ### Accessibility (WCAG AA)
-- Skip-to-content link (CSS clip technique)
+- Skip-to-content link
 - Viewport: `user-scalable=yes, maximum-scale=5.0`
 - 44px min touch target (mobile)
-- ARIA labels on navigation
+- ARIA labels on navigation (`aria-label`, `aria-current`)
+- Semantic HTML (`<nav>`, `<main>`, `<section>`, `<footer>`)
 - Motion preferences respected (`prefers-reduced-motion`)
-- Semantic HTML with proper heading hierarchy
+- Proper heading hierarchy (h1 → h2 → h3)
+- Descriptive alt text for images
+- Keyboard navigation support
 
 ### SEO
 - Unique titles: "[Page Name] - DBCA Global"
 - Meta descriptions: 150-160 characters
 - Canonical URLs on all pages
-- Open Graph + Twitter card tags
-- Structured data (homepage)
+- Open Graph + Twitter card tags (all pages)
+- Structured data (Organization schema on homepage)
+- Semantic HTML structure
 
 ### Performance
-- Single custom CSS file
+- Parallax uses `requestAnimationFrame` for smooth performance
+- Passive event listeners for scroll events
+- Images optimized (WebP where possible)
 - Google Fonts with `display=swap`
-- No JavaScript frameworks
 - Conditional Google Analytics (production only)
+- No JavaScript frameworks (vanilla JS only)
+
+### JavaScript Features
+- Parallax scrolling (respects reduced motion)
+- Mobile navigation toggle
+- Smooth scroll for anchor links
+- Scroll-triggered animations (Intersection Observer)
+- Navbar scroll effect (transparent → white)
 
 ## Development
 
@@ -220,7 +341,10 @@ npm run dev          # Start dev server (http://localhost:3010)
 ### Local Testing
 - Test all pages at different breakpoints (desktop, tablet, mobile)
 - Verify navigation works across all pages
-- Check contrast on animated background
+- Test parallax effects (disable if `prefers-reduced-motion`)
+- Check mobile menu functionality
+- Verify all links work
+- Test smooth scrolling
 
 ## Deployment
 
@@ -259,40 +383,61 @@ npm run dev          # Start dev server (http://localhost:3010)
 ## Maintenance Guidelines
 
 ### DO:
-- Edit only `custom.css` for styling changes
+- Use `modern.css` for homepage styles
+- Use `content-pages.css` for content page styles
+- Use `custom.css` for global overrides only
 - Maintain consistent navigation across all pages
-- Use `.content` blocks for each section
+- Use `.content-block` structure for content sections
 - Update meta descriptions when content changes significantly
 - Preserve semantic HTML structure
 - Keep all pages mobile-responsive
-- Test locally before committing
+- Test parallax effects work correctly
+- Verify all links work
 
 ### DON'T:
-- Modify `main.css` (theme file)
-- Remove animated background
-- Change directory structure
+- Modify `main.css` (legacy file, not actively used)
+- Remove parallax effects without considering accessibility
+- Change navigation structure without updating all pages
 - Add JavaScript frameworks
 - Commit `/docs` folder
 - Skip accessibility features
+- Break mobile navigation
 
-### CSS Structure
-All custom styles in `/assets/css/custom.css`:
-- Global overrides at top (font, body classes)
-- Content page styles
-- Component styles (.content, .contact-method, .tagline)
-- Homepage overrides
-- Motion preferences
-- Media queries (tablet 768px, mobile 480px)
+### CSS Architecture
+- **modern.css** - Homepage parallax design, navigation, hero sections
+- **content-pages.css** - Content page styles, hero sections, content blocks
+- **custom.css** - Global font imports, skip-to-content, shared utilities
+- Mobile-first responsive design
+- Media queries: tablet 768px, mobile 480px
+
+### JavaScript Architecture
+- **parallax.js** - All interactive functionality:
+  - Parallax scrolling effects
+  - Mobile navigation toggle
+  - Navbar scroll effects
+  - Smooth scrolling
+  - Scroll-triggered animations
+  - Respects `prefers-reduced-motion`
 
 ### When Updating Content:
 1. Maintain heading hierarchy (h1 → h2 → h3)
-2. Use consistent `.content` block structure
-3. Keep text left-aligned within content boxes
-4. Test mobile font sizes
-5. Update Open Graph descriptions if page changes
+2. Use consistent `.content-block` structure
+3. Keep text left-aligned within content blocks
+4. Test mobile font sizes and spacing
+5. Update Open Graph descriptions if page changes significantly
+6. Verify parallax images load correctly
+7. Test navigation on all pages
+
+### Image Sources
+- Hero backgrounds: Unsplash (public domain)
+- Container images: Unsplash shipping/container photos
+- Ocean images: Unsplash ocean views
+- Ship images: Unsplash cargo ship photos
+- All images optimized for web (WebP preferred)
 
 ---
 
-**Last Updated:** October 2025  
+**Last Updated:** December 2024  
+**Design Version:** Modern Parallax (v2.0)  
 **Maintained By:** AI Coding Assistants  
-**Status:** Production-ready, optimized, accessible
+**Status:** Production-ready, optimized, accessible, modern design
